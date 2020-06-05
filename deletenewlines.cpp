@@ -65,15 +65,17 @@ void DeleteNewlines::on_actionAbout_triggered()
 void DeleteNewlines::on_actionSave_edited_text_triggered()
 {
     QString filename = QFileDialog::getSaveFileName(this, tr("Save file"), QCoreApplication::applicationDirPath(), tr("Text file (*.txt)"));
-    if (filename.lastIndexOf(".txt") == -1){
-        filename = filename + ".txt";
+    if (!filename.isEmpty()){
+        if (filename.lastIndexOf(".txt") == -1){
+            filename = filename + ".txt";
+        }
+        QFile file(filename);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            QTextStream out(&file);
+            out << ui->editedText->toPlainText();
+            out.flush();
+        }
+        file.close();
+        ui->statusbar->showMessage("File saved " + filename, 1500);
     }
-    QFile file(filename);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream out(&file);
-        out << ui->editedText->toPlainText();
-        out.flush();
-    }
-    file.close();
-    ui->statusbar->showMessage("File saved " + filename, 1500);
 }
