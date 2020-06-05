@@ -55,5 +55,25 @@ void DeleteNewlines::status_copied_slot()
 
 void DeleteNewlines::on_actionAbout_triggered()
 {
+    About *window = new About(this);
+    window->setWindowFlags(window->windowFlags() & ~Qt::WindowContextHelpButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+    window->setModal(true);
+    window->setAttribute(Qt::WA_DeleteOnClose);
+    window->show();
+}
 
+void DeleteNewlines::on_actionSave_edited_text_triggered()
+{
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save file"), QCoreApplication::applicationDirPath(), tr("Text file (*.txt)"));
+    if (filename.lastIndexOf(".txt") == -1){
+        filename = filename + ".txt";
+    }
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QTextStream out(&file);
+        out << ui->editedText->toPlainText();
+        out.flush();
+    }
+    file.close();
+    ui->statusbar->showMessage("File saved " + filename, 1500);
 }
