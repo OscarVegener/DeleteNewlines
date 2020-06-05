@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QClipboard>
+#include <QFileDialog>
+#include <QTextStream>
+#include "about.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DeleteNewlines; }
@@ -28,6 +31,10 @@ private slots:
     void status_cleared_slot();
 
     void status_copied_slot();
+
+    void on_actionAbout_triggered();
+
+    void on_actionSave_edited_text_triggered();
 
 private:
     Ui::DeleteNewlines *ui;
