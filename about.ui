@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>About DeleteNewLines</string>
+   <string>About DeleteNewlines</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
